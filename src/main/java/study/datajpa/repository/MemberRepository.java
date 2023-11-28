@@ -7,6 +7,7 @@ import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
@@ -23,4 +24,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("select m from Member m where m.username in :names")
     List<Member> findByNames(@Param("names") List<String> names);
+
+    List<Member> findListByUsername(String username); //컬렉션 검색조건의 대한 결과값이 없으면 List는 null이 아니라 size가 0이다.
+
+    Member findMemberListByUsername(String username);// 단건 검색조건의 대한 결과값이 없을 때 반환타입이 해당 객체이면 spring data jpa는 Exception이 아닌 null을 반환한다.
+
+    Optional<Member> findOptionalByUsername(String username); // 단건 Optional
 }
